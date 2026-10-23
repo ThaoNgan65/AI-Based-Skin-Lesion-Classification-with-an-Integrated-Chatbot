@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soi Da — Trợ lý sàng lọc da bằng AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="28" height="28">
+        <circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/>
+        <circle cx="20" cy="20" r="3" fill="currentColor"/>
+        <line x1="20" y1="2" x2="20" y2="9" stroke="currentColor" stroke-width="2"/>
+        <line x1="20" y1="31" x2="20" y2="38" stroke="currentColor" stroke-width="2"/>
+        <line x1="2" y1="20" x2="9" y2="20" stroke="currentColor" stroke-width="2"/>
+        <line x1="31" y1="20" x2="38" y2="20" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </span>
+    <div>
+      <h1>Soi&nbsp;Da</h1>
+      <p class="tagline">Sàng lọc tổn thương da bằng AI — tham khảo, không thay bác sĩ</p>
+    </div>
+  </div>
+</header>
+
+<div class="disclaimer-bar">
+  ⚠ Công cụ hỗ trợ sàng lọc, <strong>không phải chẩn đoán y khoa</strong>. Luôn tham khảo bác sĩ da liễu.
+</div>
+
+<main class="layout">
+
+  <aside class="legend">
+    <h2>Mức độ tham khảo</h2>
+    <ul class="risk-legend">
+      <li><span class="dot risk-low"></span> Nguy cơ thấp — theo dõi định kỳ</li>
+      <li><span class="dot risk-medium"></span> Cần chú ý — nên kiểm tra thêm</li>
+      <li><span class="dot risk-high"></span> Nguy cơ cao — nên khám sớm</li>
+    </ul>
+    <h2>Cách dùng</h2>
+    <ol class="steps">
+      <li>Chụp ảnh rõ nét, đủ sáng vùng da cần soi.</li>
+      <li>Điền thêm tuổi / giới tính / vị trí (tùy chọn, giúp tăng độ chính xác).</li>
+      <li>Nhấn <em>Chẩn đoán</em> và xem kết quả cùng lời khuyên.</li>
+    </ol>
+  </aside>
+
+  <section class="chat-panel">
+    <div class="chat-log" id="chatLog">
+      <div class="msg msg-bot">
+        <div class="bubble">
+          Xin chào! Gửi cho tôi một bức ảnh vùng da bạn muốn kiểm tra, tôi sẽ đưa ra
+          dự đoán sơ bộ và một vài lời khuyên ban đầu.
+        </div>
+      </div>
+    </div>
+
+    <form id="composer" class="composer">
+      <div class="scan-preview" id="scanPreview" hidden>
+        <div class="scan-ring">
+          <img id="previewImg" alt="Ảnh xem trước">
+          <div class="scan-line" id="scanLine" hidden></div>
+        </div>
+      </div>
+
+      <div class="composer-row">
+        <label class="file-btn">
+          <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp" hidden>
+          <span>📷 Chọn ảnh</span>
+        </label>
+
+        <button type="button" id="toggleDetails" class="ghost-btn">Thêm thông tin ▾</button>
+
+        <input type="text" id="textInput" placeholder="Hoặc hỏi tôi điều gì đó…" autocomplete="off">
+
+        <button type="submit" id="sendBtn" class="send-btn">Gửi</button>
+      </div>
+
+      <div class="details-row" id="detailsRow" hidden>
+        <label>Tuổi
+          <input type="number" id="ageInput" min="0" max="120" placeholder="vd: 35">
+        </label>
+        <label>Giới tính
+          <select id="sexInput">
+            <option value="unknown">Không rõ</option>
+            <option value="male">Nam</option>
+            <option value="female">Nữ</option>
+          </select>
+        </label>
+        <label>Vị trí trên cơ thể
+          <select id="locInput">
+            <option value="unknown">Không rõ</option>
+            {% for loc in localizations %}
+              {% if loc != "unknown" %}
+              <option value="{{ loc }}">{{ loc }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </label>
+      </div>
+    </form>
+  </section>
+</main>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
