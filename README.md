@@ -105,18 +105,5 @@ Mo trinh duyet tai `http://localhost:8080`:
   trong `services/dialog.py` de dien dat lai `advice_service.get_advice()`
   bang van phong gan gui hon, nhung nen giu nguyen phan disclaimer va khong
   de LLM tu them chi dinh dieu tri cu the.
-
-## Thay doi gan day
-
-- **Threshold rieng cho mel/bcc**: `services/skin_model.py` da duoc cap nhat
-  de dong bo voi ban nang cap cua notebook (`skin-diseases.ipynb`) — them
-  hang so `MEL_IDX`/`BCC_IDX`/`NV_IDX`, ham `apply_mel_bcc_threshold()`, va
-  sua ham `predict()` de ap dung threshold mel=0.30 / bcc=0.20 thay vi chi
-  dung argmax/top-k theo softmax thuan. Xem chi tiet o muc "Threshold rieng
-  cho mel/bcc" ben tren.
-- **Bo nut "Bo anh"**: nut nay trong giao dien (`templates/upload.html`,
-  gan `scan-preview`) khong hoat dong dung nhu mong doi nen da duoc go bo
-  khoi giao dien (`templates/upload.html`) va phan JS lien quan
-  (`static/script.js`, bien `clearImageBtn` va event listener tuong ung).
   Neu muon lam lai tinh nang nay trong tuong lai, can kiem tra lai dong bo
   giua `selectedFile` va gia tri cua `<input type="file" id="imageInput">`.
